@@ -1,23 +1,21 @@
 package de.neofonie.airthing
 
-import android.app.Activity
 import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
-import android.util.Log
-import android.view.Window
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import com.ekn.gruzer.gaugelibrary.ArcGauge
-import com.ekn.gruzer.gaugelibrary.HalfGauge
 import com.ekn.gruzer.gaugelibrary.Range
-import com.google.android.things.pio.PeripheralManager
-import com.google.android.things.pio.UartDevice
+import de.neofonie.airthing.mqtt.MqttPublisher
+import de.neofonie.airthing.sensor.PMSensor
 import kotlinx.android.synthetic.main.main.*
-import java.nio.ByteBuffer
-import java.nio.ByteOrder
-import kotlin.concurrent.thread
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.map
 
+@ExperimentalUnsignedTypes
 
-class Main : Activity() {
+class Main : AppCompatActivity() {
 
     private lateinit var gaugePm10: ArcGauge
     private lateinit var gaugePm2_5: ArcGauge
@@ -25,31 +23,31 @@ class Main : Activity() {
     private lateinit var gaugePm10Atm: ArcGauge
     private lateinit var gaugePm2_5Atm: ArcGauge
     private lateinit var gaugePm1_0Atm: ArcGauge
-    private lateinit var uartDevice: UartDevice
+    private val sensor = PMSensor()
 
+    private lateinit var publisher :MqttPublisher
     private val handler = Handler()
     private val dimHandler = Handler()
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        window.requestFeature(Window.FEATURE_NO_TITLE)
-        window.attributes.screenBrightness = 0.0f
-        window.attributes = window.attributes
-        val pm = PeripheralManager.getInstance()
-        val uart = pm.uartDeviceList.first()
-        uartDevice = pm.openUartDevice(uart)
-        uartDevice.apply {
-            setBaudrate(9600)
-            setParity(UartDevice.PARITY_NONE)
-            setStopBits(1)
-            setHardwareFlowControl(UartDevice.HW_FLOW_CONTROL_NONE)
-        }
-        dimScreenAfterWhile()
 
-        thread(isDaemon = true, start = true) {
-            while (true) {
-                read()
+    init {
+        lifecycleScope.launchWhenStarted {
+            publisher = MqttPublisher(this@Main, "tcp://192.168.1.157:1883")
+            val flow = sensor.startReading()
+            val topicFlow = flow.map { TopicSplitter.split(it) }
+            publisher.publish(topicFlow)
+            flow.collect {
+                updateData(it)
             }
         }
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        window.attributes.screenBrightness = 0.0f
+        window.attributes = window.attributes
+        sensor.setup()
+        dimScreenAfterWhile()
+
         setContentView(R.layout.main)
         root.setOnClickListener {
             window.attributes.screenBrightness = 1f
@@ -63,6 +61,7 @@ class Main : Activity() {
         gaugePm2_5Atm = setChart(R.id.pm2_5atm, "PM 2.5")
         gaugePm10Atm = setChart(R.id.pm10atm, "PM 10")
 
+
     }
 
     private fun dimScreenAfterWhile() {
@@ -74,26 +73,8 @@ class Main : Activity() {
     }
 
 
-    @ExperimentalUnsignedTypes
-    private fun updateData(byteArray: ByteArray) {
-        val expectedFrameLength = 28
-        val expectedControlSum = 0x424d
-        val buffer = ByteBuffer.wrap(byteArray).order(ByteOrder.BIG_ENDIAN).asShortBuffer()
-
-        val controlSum = buffer[0].toUShort().toInt()
-        val frameLength = buffer[1].toUShort().toInt()
-        val pm1_0 = buffer[2].toUShort().toInt()
-        val pm2_5 = buffer[3].toUShort().toInt()
-        val pm10 = buffer[4].toUShort().toInt()
-        val pm1_0atm = buffer[5].toUShort().toInt()
-        val pm2_5atm = buffer[6].toUShort().toInt()
-        val pm10atm = buffer[7].toUShort().toInt()
-        val checkSum = buffer[15].toUShort()
-
-        val sublist = byteArray.map { it.toUByte() }.subList(0, 30)
-        val sum = sublist.map { it.toUShort() }.reduce { acc, uShort -> (acc + uShort).toUShort() }
-        Log.d("CHECKSUM", "$checkSum == $sum")
-        if (controlSum == expectedControlSum && frameLength == expectedFrameLength && checkSum == sum) {
+    private fun updateData(data: PMSensor.Data) {
+        data.apply {
             gaugePm2_5.value = pm2_5.toDouble()
             gaugePm1_0.value = pm1_0.toDouble()
             gaugePm10.value = pm10.toDouble()
@@ -104,15 +85,6 @@ class Main : Activity() {
         }
     }
 
-
-    private fun read() {
-        val buffer = ByteArray(32)
-        val read = uartDevice.read(buffer, buffer.size)
-        if (read == 32) {
-            Log.d("UART", "UART$read =  ${buffer.toList().map { it.toUByte() }}")
-            handler.post { updateData(buffer) }
-        }
-    }
 
     private fun setChart(id: Int, name: String): ArcGauge {
         val halfGauge: ArcGauge = findViewById(id)
@@ -147,5 +119,6 @@ class Main : Activity() {
         handler.removeCallbacksAndMessages(null)
         dimHandler.removeCallbacksAndMessages(null)
     }
+
 
 }
