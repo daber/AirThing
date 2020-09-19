@@ -10,13 +10,17 @@ import com.ekn.gruzer.gaugelibrary.Range
 import de.neofonie.airthing.mqtt.MqttPublisher
 import de.neofonie.airthing.sensor.PMSensor
 import kotlinx.android.synthetic.main.main.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
 
 @ExperimentalUnsignedTypes
 
 class Main : AppCompatActivity() {
 
+    private var sensorJob: Job? = null
     private lateinit var gaugePm10: ArcGauge
     private lateinit var gaugePm2_5: ArcGauge
     private lateinit var gaugePm1_0: ArcGauge
@@ -25,19 +29,25 @@ class Main : AppCompatActivity() {
     private lateinit var gaugePm1_0Atm: ArcGauge
     private val sensor = PMSensor()
 
-    private lateinit var publisher :MqttPublisher
+    private lateinit var publisher: MqttPublisher
     private val handler = Handler()
     private val dimHandler = Handler()
 
     init {
         lifecycleScope.launchWhenStarted {
-            publisher = MqttPublisher(this@Main, "tcp://192.168.1.157:1883")
-            val flow = sensor.startReading()
-            val topicFlow = flow.map { TopicSplitter.split(it) }
-            publisher.publish(topicFlow)
-            flow.collect {
-                updateData(it)
-            }
+            startObserving()
+        }
+    }
+
+    private suspend fun startObserving() {
+        sensorJob?.cancel()
+
+        publisher = MqttPublisher(this@Main, "tcp://192.168.1.157:1883")
+        val flow = sensor.startReading()
+        val topicFlow = flow.map { TopicSplitter.split(it) }
+        publisher.publish(topicFlow)
+        flow.collect {
+            updateData(it)
         }
     }
 

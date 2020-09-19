@@ -7,6 +7,520 @@
     "info": ""
   },
   {
+    "id": "64c79b6e.b6f424",
+    "type": "mqtt in",
+    "z": "3f920760.2b8408",
+    "name": "Pm1.0",
+    "topic": "air/pm1.0",
+    "qos": "0",
+    "datatype": "auto",
+    "broker": "b53700d2.56812",
+    "x": 390,
+    "y": 340,
+    "wires": [
+      [
+        "193b7378.71973d"
+      ]
+    ]
+  },
+  {
+    "id": "152576fd.3ea849",
+    "type": "mqtt in",
+    "z": "3f920760.2b8408",
+    "name": "Pm2.5",
+    "topic": "air/pm2.5",
+    "qos": "0",
+    "datatype": "auto",
+    "broker": "b53700d2.56812",
+    "x": 390,
+    "y": 420,
+    "wires": [
+      [
+        "665cc33b.3d6ddc"
+      ]
+    ]
+  },
+  {
+    "id": "439d66a7.61abc8",
+    "type": "mqtt in",
+    "z": "3f920760.2b8408",
+    "name": "Pm10",
+    "topic": "air/pm10",
+    "qos": "0",
+    "datatype": "auto",
+    "broker": "b53700d2.56812",
+    "x": 390,
+    "y": 480,
+    "wires": [
+      [
+        "733c8171.f636"
+      ]
+    ]
+  },
+  {
+    "id": "e767dd1.ffd092",
+    "type": "mqtt in",
+    "z": "3f920760.2b8408",
+    "name": "Pm1.0atm",
+    "topic": "air/pm1.0atm",
+    "qos": "0",
+    "datatype": "auto",
+    "broker": "b53700d2.56812",
+    "x": 400,
+    "y": 680,
+    "wires": [
+      [
+        "40cd1f9b.7d4cd",
+        "935033aa.ef2c6"
+      ]
+    ]
+  },
+  {
+    "id": "ef5ebebd.04b66",
+    "type": "mqtt in",
+    "z": "3f920760.2b8408",
+    "name": "Pm2.5atm",
+    "topic": "air/pm2.5atm",
+    "qos": "0",
+    "datatype": "auto",
+    "broker": "b53700d2.56812",
+    "x": 400,
+    "y": 740,
+    "wires": [
+      [
+        "9681157b.731188",
+        "935033aa.ef2c6"
+      ]
+    ]
+  },
+  {
+    "id": "2b817d96.281b22",
+    "type": "mqtt in",
+    "z": "3f920760.2b8408",
+    "name": "Pm10atm",
+    "topic": "air/pm10atm",
+    "qos": "0",
+    "datatype": "auto",
+    "broker": "b53700d2.56812",
+    "x": 400,
+    "y": 800,
+    "wires": [
+      [
+        "4d7181df.4d9b8",
+        "935033aa.ef2c6"
+      ]
+    ]
+  },
+  {
+    "id": "193b7378.71973d",
+    "type": "ui_gauge",
+    "z": "3f920760.2b8408",
+    "name": "",
+    "group": "c853bf0c.eb2cd",
+    "order": 2,
+    "width": 0,
+    "height": 0,
+    "gtype": "gage",
+    "title": "PM 1.0",
+    "label": "units",
+    "format": "{{value}}",
+    "min": 0,
+    "max": "150",
+    "colors": [
+      "#00b500",
+      "#e6e600",
+      "#ca3838"
+    ],
+    "seg1": "50",
+    "seg2": "100",
+    "x": 1120,
+    "y": 340,
+    "wires": []
+  },
+  {
+    "id": "40cd1f9b.7d4cd",
+    "type": "ui_gauge",
+    "z": "3f920760.2b8408",
+    "name": "",
+    "group": "c853bf0c.eb2cd",
+    "order": 1,
+    "width": 0,
+    "height": 0,
+    "gtype": "gage",
+    "title": "PM 1.0 Atm",
+    "label": "units",
+    "format": "{{value}}",
+    "min": 0,
+    "max": "150",
+    "colors": [
+      "#00b500",
+      "#e6e600",
+      "#ca3838"
+    ],
+    "seg1": "50",
+    "seg2": "100",
+    "x": 1130,
+    "y": 680,
+    "wires": []
+  },
+  {
+    "id": "665cc33b.3d6ddc",
+    "type": "ui_gauge",
+    "z": "3f920760.2b8408",
+    "name": "",
+    "group": "ff970fad.985b8",
+    "order": 2,
+    "width": 0,
+    "height": 0,
+    "gtype": "gage",
+    "title": "PM 2.5",
+    "label": "units",
+    "format": "{{value}}",
+    "min": 0,
+    "max": "150",
+    "colors": [
+      "#00b500",
+      "#e6e600",
+      "#ca3838"
+    ],
+    "seg1": "50",
+    "seg2": "100",
+    "x": 1120,
+    "y": 420,
+    "wires": []
+  },
+  {
+    "id": "9681157b.731188",
+    "type": "ui_gauge",
+    "z": "3f920760.2b8408",
+    "name": "",
+    "group": "ff970fad.985b8",
+    "order": 1,
+    "width": 0,
+    "height": 0,
+    "gtype": "gage",
+    "title": "PM 2.5 Atm",
+    "label": "units",
+    "format": "{{value}}",
+    "min": 0,
+    "max": "150",
+    "colors": [
+      "#00b500",
+      "#e6e600",
+      "#ca3838"
+    ],
+    "seg1": "50",
+    "seg2": "100",
+    "x": 1130,
+    "y": 740,
+    "wires": []
+  },
+  {
+    "id": "733c8171.f636",
+    "type": "ui_gauge",
+    "z": "3f920760.2b8408",
+    "name": "",
+    "group": "514874bd.7ef2dc",
+    "order": 2,
+    "width": 0,
+    "height": 0,
+    "gtype": "gage",
+    "title": "PM 10",
+    "label": "units",
+    "format": "{{value}}",
+    "min": 0,
+    "max": "150",
+    "colors": [
+      "#00b500",
+      "#e6e600",
+      "#ca3838"
+    ],
+    "seg1": "50",
+    "seg2": "100",
+    "x": 1110,
+    "y": 480,
+    "wires": []
+  },
+  {
+    "id": "4d7181df.4d9b8",
+    "type": "ui_gauge",
+    "z": "3f920760.2b8408",
+    "name": "",
+    "group": "514874bd.7ef2dc",
+    "order": 1,
+    "width": 0,
+    "height": 0,
+    "gtype": "gage",
+    "title": "PM 10 Atm",
+    "label": "units",
+    "format": "{{value}}",
+    "min": 0,
+    "max": "150",
+    "colors": [
+      "#00b500",
+      "#e6e600",
+      "#ca3838"
+    ],
+    "seg1": "50",
+    "seg2": "100",
+    "x": 1130,
+    "y": 800,
+    "wires": []
+  },
+  {
+    "id": "cc341e1.19d4de",
+    "type": "ui_chart",
+    "z": "3f920760.2b8408",
+    "name": "Daily",
+    "group": "a36a968f.8af0a8",
+    "order": 2,
+    "width": 0,
+    "height": 0,
+    "label": "Daily",
+    "chartType": "line",
+    "legend": "true",
+    "xformat": "HH:mm:ss",
+    "interpolate": "linear",
+    "nodata": "",
+    "dot": false,
+    "ymin": "",
+    "ymax": "",
+    "removeOlder": "24",
+    "removeOlderPoints": "",
+    "removeOlderUnit": "3600",
+    "cutout": 0,
+    "useOneColor": false,
+    "useUTC": false,
+    "colors": [
+      "#ff0000",
+      "#00ff00",
+      "#0000ff",
+      "#2ca02c",
+      "#98df8a",
+      "#d62728",
+      "#ff9896",
+      "#9467bd",
+      "#c5b0d5"
+    ],
+    "useOldStyle": false,
+    "outputs": 1,
+    "x": 1270,
+    "y": 200,
+    "wires": [
+      [
+        "7b33671e.d43b08"
+      ]
+    ]
+  },
+  {
+    "id": "935033aa.ef2c6",
+    "type": "function",
+    "z": "3f920760.2b8408",
+    "name": "rename",
+    "func": "msg.topic = msg.topic.split(\"/\")[1].replace(\"atm\",\"\")\n\nmsg.payload = parseInt(msg.payload)\nreturn msg;",
+    "outputs": 1,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "x": 660,
+    "y": 300,
+    "wires": [
+      [
+        "4330564b.b1e0e8",
+        "539e6860.b165a8"
+      ]
+    ]
+  },
+  {
+    "id": "adb9b815.49e7b8",
+    "type": "inject",
+    "z": "3f920760.2b8408",
+    "name": "Clear",
+    "props": [
+      {
+        "p": "payload"
+      },
+      {
+        "p": "topic",
+        "vt": "str"
+      }
+    ],
+    "repeat": "",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "topic": "",
+    "payload": "[]",
+    "payloadType": "json",
+    "x": 1050,
+    "y": 200,
+    "wires": [
+      [
+        "cc341e1.19d4de"
+      ]
+    ]
+  },
+  {
+    "id": "4330564b.b1e0e8",
+    "type": "smooth",
+    "z": "3f920760.2b8408",
+    "name": "every minuteAVG",
+    "property": "payload",
+    "action": "mean",
+    "count": "30",
+    "round": "",
+    "mult": "multi",
+    "reduce": true,
+    "x": 930,
+    "y": 260,
+    "wires": [
+      [
+        "cc341e1.19d4de"
+      ]
+    ]
+  },
+  {
+    "id": "539e6860.b165a8",
+    "type": "smooth",
+    "z": "3f920760.2b8408",
+    "name": "every hour",
+    "property": "payload",
+    "action": "mean",
+    "count": "1800",
+    "round": "",
+    "mult": "multi",
+    "reduce": true,
+    "x": 770,
+    "y": 160,
+    "wires": [
+      [
+        "fad4d5ae.523b18"
+      ]
+    ]
+  },
+  {
+    "id": "fad4d5ae.523b18",
+    "type": "ui_chart",
+    "z": "3f920760.2b8408",
+    "name": "Year",
+    "group": "a36a968f.8af0a8",
+    "order": 2,
+    "width": 0,
+    "height": 0,
+    "label": "yearly",
+    "chartType": "line",
+    "legend": "true",
+    "xformat": "HH:mm:ss",
+    "interpolate": "linear",
+    "nodata": "",
+    "dot": false,
+    "ymin": "",
+    "ymax": "",
+    "removeOlder": "365",
+    "removeOlderPoints": "",
+    "removeOlderUnit": "86400",
+    "cutout": 0,
+    "useOneColor": false,
+    "useUTC": false,
+    "colors": [
+      "#ff0000",
+      "#00ff00",
+      "#0000ff",
+      "#2ca02c",
+      "#98df8a",
+      "#d62728",
+      "#ff9896",
+      "#9467bd",
+      "#c5b0d5"
+    ],
+    "useOldStyle": false,
+    "outputs": 1,
+    "x": 1290,
+    "y": 140,
+    "wires": [
+      [
+        "65941480.a76cec"
+      ]
+    ]
+  },
+  {
+    "id": "b8b62680.f73468",
+    "type": "inject",
+    "z": "3f920760.2b8408",
+    "name": "Clear",
+    "props": [
+      {
+        "p": "payload"
+      },
+      {
+        "p": "topic",
+        "vt": "str"
+      }
+    ],
+    "repeat": "",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "topic": "",
+    "payload": "[]",
+    "payloadType": "json",
+    "x": 970,
+    "y": 80,
+    "wires": [
+      [
+        "fad4d5ae.523b18"
+      ]
+    ]
+  },
+  {
+    "id": "7b33671e.d43b08",
+    "type": "persist in",
+    "z": "3f920760.2b8408",
+    "name": "day_data",
+    "storageNode": "7b2d6c84.5d3594",
+    "x": 1500,
+    "y": 200,
+    "wires": []
+  },
+  {
+    "id": "7b1da857.895a98",
+    "type": "persist out",
+    "z": "3f920760.2b8408",
+    "name": "day_data",
+    "storageNode": "7b2d6c84.5d3594",
+    "x": 1280,
+    "y": 260,
+    "wires": [
+      [
+        "cc341e1.19d4de"
+      ]
+    ]
+  },
+  {
+    "id": "65941480.a76cec",
+    "type": "persist in",
+    "z": "3f920760.2b8408",
+    "name": "year_data",
+    "storageNode": "7b2d6c84.5d3594",
+    "x": 1480,
+    "y": 140,
+    "wires": []
+  },
+  {
+    "id": "b4458fc8.4e2e5",
+    "type": "persist out",
+    "z": "3f920760.2b8408",
+    "name": "year_data",
+    "storageNode": "7b2d6c84.5d3594",
+    "x": 1310,
+    "y": 60,
+    "wires": [
+      [
+        "fad4d5ae.523b18"
+      ]
+    ]
+  },
+  {
     "id": "b53700d2.56812",
     "type": "mqtt-broker",
     "z": "",
@@ -29,119 +543,14 @@
     "willPayload": ""
   },
   {
-    "id": "82e74c54.92983",
-    "type": "ui_base",
-    "theme": {
-      "name": "theme-light",
-      "lightTheme": {
-        "default": "#0094CE",
-        "baseColor": "#0094CE",
-        "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
-        "edited": true,
-        "reset": false
-      },
-      "darkTheme": {
-        "default": "#097479",
-        "baseColor": "#097479",
-        "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
-        "edited": false
-      },
-      "customTheme": {
-        "name": "Untitled Theme 1",
-        "default": "#4B7930",
-        "baseColor": "#4B7930",
-        "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif"
-      },
-      "themeState": {
-        "base-color": {
-          "default": "#0094CE",
-          "value": "#0094CE",
-          "edited": false
-        },
-        "page-titlebar-backgroundColor": {
-          "value": "#0094CE",
-          "edited": false
-        },
-        "page-backgroundColor": {
-          "value": "#fafafa",
-          "edited": false
-        },
-        "page-sidebar-backgroundColor": {
-          "value": "#ffffff",
-          "edited": false
-        },
-        "group-textColor": {
-          "value": "#1bbfff",
-          "edited": false
-        },
-        "group-borderColor": {
-          "value": "#ffffff",
-          "edited": false
-        },
-        "group-backgroundColor": {
-          "value": "#ffffff",
-          "edited": false
-        },
-        "widget-textColor": {
-          "value": "#111111",
-          "edited": false
-        },
-        "widget-backgroundColor": {
-          "value": "#0094ce",
-          "edited": false
-        },
-        "widget-borderColor": {
-          "value": "#ffffff",
-          "edited": false
-        },
-        "base-font": {
-          "value": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif"
-        }
-      },
-      "angularTheme": {
-        "primary": "indigo",
-        "accents": "blue",
-        "warn": "red",
-        "background": "grey"
-      }
-    },
-    "site": {
-      "name": "Node-RED Dashboard",
-      "hideToolbar": "false",
-      "allowSwipe": "false",
-      "lockMenu": "false",
-      "allowTempTheme": "true",
-      "dateFormat": "DD/MM/YYYY",
-      "sizes": {
-        "sx": 48,
-        "sy": 48,
-        "gx": 6,
-        "gy": 6,
-        "cx": 6,
-        "cy": 6,
-        "px": 0,
-        "py": 0
-      }
-    }
-  },
-  {
-    "id": "7bc40190.a967",
-    "type": "ui_tab",
-    "z": "",
-    "name": "Readings",
-    "icon": "dashboard",
-    "disabled": false,
-    "hidden": false
-  },
-  {
-    "id": "a36a968f.8af0a8",
+    "id": "c853bf0c.eb2cd",
     "type": "ui_group",
     "z": "",
-    "name": "PM Levels History",
-    "tab": "14d82e94.453741",
+    "name": "PM1.0",
+    "tab": "7bc40190.a967",
     "order": 1,
     "disp": true,
-    "width": "27",
+    "width": "6",
     "collapse": false
   },
   {
@@ -167,6 +576,33 @@
     "collapse": false
   },
   {
+    "id": "a36a968f.8af0a8",
+    "type": "ui_group",
+    "z": "",
+    "name": "PM Levels History",
+    "tab": "14d82e94.453741",
+    "order": 1,
+    "disp": true,
+    "width": "27",
+    "collapse": false
+  },
+  {
+    "id": "7b2d6c84.5d3594",
+    "type": "persist-store",
+    "z": "",
+    "filename": ".node-red/persistence.json",
+    "interval": "60"
+  },
+  {
+    "id": "7bc40190.a967",
+    "type": "ui_tab",
+    "z": "",
+    "name": "Readings",
+    "icon": "dashboard",
+    "disabled": false,
+    "hidden": false
+  },
+  {
     "id": "14d82e94.453741",
     "type": "ui_tab",
     "z": "",
@@ -174,367 +610,5 @@
     "icon": "dashboard",
     "disabled": false,
     "hidden": false
-  },
-  {
-    "id": "c853bf0c.eb2cd",
-    "type": "ui_group",
-    "z": "",
-    "name": "PM1.0",
-    "tab": "7bc40190.a967",
-    "order": 1,
-    "disp": true,
-    "width": "6",
-    "collapse": false
-  },
-  {
-    "id": "64c79b6e.b6f424",
-    "type": "mqtt in",
-    "z": "3f920760.2b8408",
-    "name": "Pm1.0",
-    "topic": "air/pm1.0",
-    "qos": "0",
-    "datatype": "auto",
-    "broker": "b53700d2.56812",
-    "x": 410,
-    "y": 220,
-    "wires": [
-      [
-        "193b7378.71973d",
-        "935033aa.ef2c6"
-      ]
-    ]
-  },
-  {
-    "id": "152576fd.3ea849",
-    "type": "mqtt in",
-    "z": "3f920760.2b8408",
-    "name": "Pm2.5",
-    "topic": "air/pm2.5",
-    "qos": "0",
-    "datatype": "auto",
-    "broker": "b53700d2.56812",
-    "x": 410,
-    "y": 300,
-    "wires": [
-      [
-        "665cc33b.3d6ddc",
-        "935033aa.ef2c6"
-      ]
-    ]
-  },
-  {
-    "id": "439d66a7.61abc8",
-    "type": "mqtt in",
-    "z": "3f920760.2b8408",
-    "name": "Pm10",
-    "topic": "air/pm10",
-    "qos": "0",
-    "datatype": "auto",
-    "broker": "b53700d2.56812",
-    "x": 410,
-    "y": 360,
-    "wires": [
-      [
-        "733c8171.f636",
-        "935033aa.ef2c6"
-      ]
-    ]
-  },
-  {
-    "id": "e767dd1.ffd092",
-    "type": "mqtt in",
-    "z": "3f920760.2b8408",
-    "name": "Pm1.0atm",
-    "topic": "air/pm1.0atm",
-    "qos": "0",
-    "datatype": "auto",
-    "broker": "b53700d2.56812",
-    "x": 420,
-    "y": 440,
-    "wires": [
-      [
-        "40cd1f9b.7d4cd"
-      ]
-    ]
-  },
-  {
-    "id": "ef5ebebd.04b66",
-    "type": "mqtt in",
-    "z": "3f920760.2b8408",
-    "name": "Pm2.5atm",
-    "topic": "air/pm2.5atm",
-    "qos": "0",
-    "datatype": "auto",
-    "broker": "b53700d2.56812",
-    "x": 420,
-    "y": 500,
-    "wires": [
-      [
-        "9681157b.731188"
-      ]
-    ]
-  },
-  {
-    "id": "2b817d96.281b22",
-    "type": "mqtt in",
-    "z": "3f920760.2b8408",
-    "name": "Pm10atm",
-    "topic": "air/pm10atm",
-    "qos": "0",
-    "datatype": "auto",
-    "broker": "b53700d2.56812",
-    "x": 420,
-    "y": 560,
-    "wires": [
-      [
-        "4d7181df.4d9b8"
-      ]
-    ]
-  },
-  {
-    "id": "193b7378.71973d",
-    "type": "ui_gauge",
-    "z": "3f920760.2b8408",
-    "name": "",
-    "group": "c853bf0c.eb2cd",
-    "order": 0,
-    "width": 0,
-    "height": 0,
-    "gtype": "gage",
-    "title": "PM 1.0",
-    "label": "units",
-    "format": "{{value}}",
-    "min": 0,
-    "max": "150",
-    "colors": [
-      "#00b500",
-      "#e6e600",
-      "#ca3838"
-    ],
-    "seg1": "50",
-    "seg2": "100",
-    "x": 1140,
-    "y": 220,
-    "wires": []
-  },
-  {
-    "id": "40cd1f9b.7d4cd",
-    "type": "ui_gauge",
-    "z": "3f920760.2b8408",
-    "name": "",
-    "group": "c853bf0c.eb2cd",
-    "order": 0,
-    "width": 0,
-    "height": 0,
-    "gtype": "gage",
-    "title": "PM 1.0 Atm",
-    "label": "units",
-    "format": "{{value}}",
-    "min": 0,
-    "max": "150",
-    "colors": [
-      "#00b500",
-      "#e6e600",
-      "#ca3838"
-    ],
-    "seg1": "50",
-    "seg2": "100",
-    "x": 1150,
-    "y": 440,
-    "wires": []
-  },
-  {
-    "id": "665cc33b.3d6ddc",
-    "type": "ui_gauge",
-    "z": "3f920760.2b8408",
-    "name": "",
-    "group": "ff970fad.985b8",
-    "order": 0,
-    "width": 0,
-    "height": 0,
-    "gtype": "gage",
-    "title": "PM 2.5",
-    "label": "units",
-    "format": "{{value}}",
-    "min": 0,
-    "max": "150",
-    "colors": [
-      "#00b500",
-      "#e6e600",
-      "#ca3838"
-    ],
-    "seg1": "50",
-    "seg2": "100",
-    "x": 1140,
-    "y": 300,
-    "wires": []
-  },
-  {
-    "id": "9681157b.731188",
-    "type": "ui_gauge",
-    "z": "3f920760.2b8408",
-    "name": "",
-    "group": "ff970fad.985b8",
-    "order": 0,
-    "width": 0,
-    "height": 0,
-    "gtype": "gage",
-    "title": "PM 2.5 Atm",
-    "label": "units",
-    "format": "{{value}}",
-    "min": 0,
-    "max": "150",
-    "colors": [
-      "#00b500",
-      "#e6e600",
-      "#ca3838"
-    ],
-    "seg1": "50",
-    "seg2": "100",
-    "x": 1150,
-    "y": 500,
-    "wires": []
-  },
-  {
-    "id": "733c8171.f636",
-    "type": "ui_gauge",
-    "z": "3f920760.2b8408",
-    "name": "",
-    "group": "514874bd.7ef2dc",
-    "order": 0,
-    "width": 0,
-    "height": 0,
-    "gtype": "gage",
-    "title": "PM 10",
-    "label": "units",
-    "format": "{{value}}",
-    "min": 0,
-    "max": "150",
-    "colors": [
-      "#00b500",
-      "#e6e600",
-      "#ca3838"
-    ],
-    "seg1": "50",
-    "seg2": "100",
-    "x": 1130,
-    "y": 360,
-    "wires": []
-  },
-  {
-    "id": "4d7181df.4d9b8",
-    "type": "ui_gauge",
-    "z": "3f920760.2b8408",
-    "name": "",
-    "group": "514874bd.7ef2dc",
-    "order": 0,
-    "width": 0,
-    "height": 0,
-    "gtype": "gage",
-    "title": "PM 10 Atm",
-    "label": "units",
-    "format": "{{value}}",
-    "min": 0,
-    "max": "150",
-    "colors": [
-      "#00b500",
-      "#e6e600",
-      "#ca3838"
-    ],
-    "seg1": "50",
-    "seg2": "100",
-    "x": 1150,
-    "y": 560,
-    "wires": []
-  },
-  {
-    "id": "cc341e1.19d4de",
-    "type": "ui_chart",
-    "z": "3f920760.2b8408",
-    "name": "",
-    "group": "a36a968f.8af0a8",
-    "order": 2,
-    "width": 0,
-    "height": 0,
-    "label": "chart",
-    "chartType": "line",
-    "legend": "true",
-    "xformat": "HH:mm:ss",
-    "interpolate": "linear",
-    "nodata": "",
-    "dot": true,
-    "ymin": "",
-    "ymax": "",
-    "removeOlder": 1,
-    "removeOlderPoints": "",
-    "removeOlderUnit": "3600",
-    "cutout": 0,
-    "useOneColor": false,
-    "useUTC": false,
-    "colors": [
-      "#ff0000",
-      "#00ff00",
-      "#0000ff",
-      "#2ca02c",
-      "#98df8a",
-      "#d62728",
-      "#ff9896",
-      "#9467bd",
-      "#c5b0d5"
-    ],
-    "useOldStyle": false,
-    "outputs": 1,
-    "x": 860,
-    "y": 80,
-    "wires": [
-      []
-    ]
-  },
-  {
-    "id": "935033aa.ef2c6",
-    "type": "function",
-    "z": "3f920760.2b8408",
-    "name": "rename",
-    "func": "msg.topic = msg.topic.split(\"/\")[1]\nreturn msg;",
-    "outputs": 1,
-    "noerr": 0,
-    "initialize": "",
-    "finalize": "",
-    "x": 680,
-    "y": 180,
-    "wires": [
-      [
-        "cc341e1.19d4de"
-      ]
-    ]
-  },
-  {
-    "id": "adb9b815.49e7b8",
-    "type": "inject",
-    "z": "3f920760.2b8408",
-    "name": "Clear",
-    "props": [
-      {
-        "p": "payload"
-      },
-      {
-        "p": "topic",
-        "vt": "str"
-      }
-    ],
-    "repeat": "",
-    "crontab": "",
-    "once": false,
-    "onceDelay": 0.1,
-    "topic": "",
-    "payload": "[]",
-    "payloadType": "json",
-    "x": 520,
-    "y": 100,
-    "wires": [
-      [
-        "cc341e1.19d4de"
-      ]
-    ]
   }
 ]
