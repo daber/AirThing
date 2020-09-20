@@ -46,7 +46,7 @@ class PMSensor {
                     decodeData()?.let { emit(it) }
                 }
             }
-        }.flowOn(Dispatchers.IO)
+        }.flowOn(Dispatchers.IO).conflate()
     }
 
     private fun decodeData(): Data? {
