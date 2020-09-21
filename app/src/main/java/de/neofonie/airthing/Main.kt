@@ -3,14 +3,17 @@ package de.neofonie.airthing
 import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
+import android.widget.CompoundButton
+import android.widget.Switch
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SwitchCompat
 import androidx.lifecycle.lifecycleScope
 import com.ekn.gruzer.gaugelibrary.ArcGauge
 import com.ekn.gruzer.gaugelibrary.Range
 import de.neofonie.airthing.mqtt.MqttPublisher
 import de.neofonie.airthing.sensor.PMSensor
 import kotlinx.android.synthetic.main.main.*
-import kotlinx.coroutines.Job
+import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.map
 
@@ -25,30 +28,49 @@ class Main : AppCompatActivity() {
     private lateinit var gaugePm10Atm: ArcGauge
     private lateinit var gaugePm2_5Atm: ArcGauge
     private lateinit var gaugePm1_0Atm: ArcGauge
+    private lateinit var switch: SwitchCompat
+    private val gauges: Set<ArcGauge>
+        get() = setOf(gaugePm10, gaugePm1_0, gaugePm2_5, gaugePm10Atm, gaugePm2_5Atm, gaugePm1_0Atm)
+
+
     private val sensor = PMSensor()
 
     private lateinit var publisher: MqttPublisher
     private val handler = Handler()
     private val dimHandler = Handler()
 
-    init {
-        lifecycleScope.launchWhenStarted {
-            startObserving()
-        }
-    }
-
-    private suspend fun startObserving() {
+    private fun startObserving() {
         sensorJob?.cancel()
+        sensorJob = lifecycleScope.launch {
+            publisher = MqttPublisher(this@Main, "tcp://192.168.1.157:1883")
 
-        publisher = MqttPublisher(this@Main, "tcp://192.168.1.157:1883")
+            val flow = sensor.startReading()
+            val topicFlow = flow.map { TopicSplitter.split(it) }
+            publisher.publish(topicFlow)
 
-        val flow = sensor.startReading()
-        val topicFlow = flow.map { TopicSplitter.split(it) }
-        publisher.publish(topicFlow)
-        flow.collect {
-            updateData(it)
+
+            sensor.isEnabled = true
+            syncUI()
+            delay(10_000)
+            flow.collect {
+                updateData(it)
+            }
+
         }
     }
+
+    private fun stopObserving() {
+        sensor.isEnabled = false
+        sensorJob?.cancel()
+        syncUI()
+    }
+
+    private val onCheckChanged =
+        CompoundButton.OnCheckedChangeListener { buttonView, isChecked ->
+            if (isChecked) {
+                startObserving()
+            } else stopObserving()
+        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,14 +85,20 @@ class Main : AppCompatActivity() {
             window.attributes = window.attributes
             dimScreenAfterWhile()
         }
+        switch = findViewById(R.id.uiOnOff)
         gaugePm1_0 = setChart(R.id.pm1_0, "PM 1.0")
         gaugePm2_5 = setChart(R.id.pm2_5, "PM 2.5")
         gaugePm10 = setChart(R.id.pm10, "PM 10")
         gaugePm1_0Atm = setChart(R.id.pm1_0atm, "PM 1.0")
         gaugePm2_5Atm = setChart(R.id.pm2_5atm, "PM 2.5")
         gaugePm10Atm = setChart(R.id.pm10atm, "PM 10")
+        switch.setOnCheckedChangeListener(onCheckChanged)
+    }
 
 
+    override fun onStart() {
+        super.onStart()
+        startObserving()
     }
 
     private fun dimScreenAfterWhile() {
@@ -123,8 +151,16 @@ class Main : AppCompatActivity() {
         return halfGauge
     }
 
+    private fun syncUI() {
+        switch.setOnCheckedChangeListener(null)
+        switch.isChecked = sensor.isEnabled
+        switch.setOnCheckedChangeListener(onCheckChanged)
+    }
+
     override fun onStop() {
         super.onStop()
+        stopObserving()
+
         handler.removeCallbacksAndMessages(null)
         dimHandler.removeCallbacksAndMessages(null)
     }

@@ -1,6 +1,7 @@
 package de.neofonie.airthing.sensor
 
 import android.util.Log
+import com.google.android.things.pio.Gpio
 import com.google.android.things.pio.PeripheralManager
 import com.google.android.things.pio.UartDevice
 import java.nio.ByteBuffer
@@ -22,10 +23,20 @@ class PMSensor {
 
     private lateinit var uartDevice: UartDevice
     private val buffer = ByteBuffer.allocate(32)
+    private lateinit var gpio: Gpio
+    var isEnabled: Boolean
+        get() = gpio.value
+        set(value) {
+            gpio.value = value
+        }
 
     fun setup() {
         val pm = PeripheralManager.getInstance()
+
         val uart = pm.uartDeviceList.first()
+        gpio = pm.openGpio("GPIO6_IO13")
+        gpio.setDirection(Gpio.DIRECTION_OUT_INITIALLY_LOW)
+
         uartDevice = pm.openUartDevice(uart)
         uartDevice.apply {
             setBaudrate(9600)

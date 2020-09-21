@@ -19,7 +19,7 @@ class MqttPublisher(ctx: Context, uri: String) : MqttCallback {
     val client = MqttAndroidClient(ctx, uri, "PM Sensor", null as MqttClientPersistence?).apply {
         setCallback(this@MqttPublisher)
     }
-    val coroutineScope = CoroutineScope(Job() + Dispatchers.IO)
+    val coroutineScope = CoroutineScope(Dispatchers.IO)
 
     fun publish(aFlow: Flow<Map<String, String>>) {
 
@@ -39,7 +39,7 @@ class MqttPublisher(ctx: Context, uri: String) : MqttCallback {
     private suspend fun connect() {
         while (true) {
             try {
-                client.co { connect(connectOptions) }
+                client.connect(connectOptions).waitForCompletion()
             } catch (e: MqttException) {
                 Log.e(TAG, "Error while connecting ", e)
                 delay(1000)
@@ -55,7 +55,7 @@ class MqttPublisher(ctx: Context, uri: String) : MqttCallback {
     }
 
     override fun connectionLost(cause: Throwable?) {
-        Log.w(TAG,"Connection lost")
+        Log.w(TAG, "Connection lost")
     }
 
     override fun messageArrived(topic: String?, message: MqttMessage?) {
