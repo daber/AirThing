@@ -48,7 +48,6 @@ class Main : AppCompatActivity() {
             val topicFlow = flow.map { TopicSplitter.split(it) }
             publisher.publish(topicFlow)
 
-
             sensor.isEnabled = true
             syncUI()
             delay(10_000)
@@ -62,6 +61,7 @@ class Main : AppCompatActivity() {
     private fun stopObserving() {
         sensor.isEnabled = false
         sensorJob?.cancel()
+        publisher.stop()
         syncUI()
     }
 
@@ -155,6 +155,12 @@ class Main : AppCompatActivity() {
         switch.setOnCheckedChangeListener(null)
         switch.isChecked = sensor.isEnabled
         switch.setOnCheckedChangeListener(onCheckChanged)
+        gauges.forEach {
+            it.isEnabled = sensor.isEnabled
+            if(!sensor.isEnabled) {
+                it.value = 0.0
+            }
+        }
     }
 
     override fun onStop() {
